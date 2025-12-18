@@ -12,26 +12,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(EmployeeController.class)
 class EmployeeControllerTest {
 
-	@Autowired
+    @Autowired
     private MockMvc mockMvc;
 
-    @Mock
+    @MockBean
     private EmployeeService service;
 
     @Autowired
     private ObjectMapper objectMapper;
-    
+
     @Test
     void testGetAllEmployees() throws Exception {
         when(service.findAll()).thenReturn(Arrays.asList(
@@ -44,7 +43,7 @@ class EmployeeControllerTest {
 
         verify(service, times(1)).findAll();
     }
-    
+
     @Test
     void testCreateEmployee() throws Exception {
         Employee emp = new Employee("Kishan", "Dev");
@@ -58,6 +57,4 @@ class EmployeeControllerTest {
 
         verify(service, times(1)).save(any(Employee.class));
     }
-    
-    
 }

@@ -18,5 +18,14 @@ pipeline {
                 bat 'mvn clean test'
             }
         }
+
+        stage('SonarQube Analysis') {
+            environment {
+                SCANNER_HOME = tool 'SonarScanner'
+            }
+            steps {
+                bat "%SCANNER_HOME%\\bin\\sonar-scanner.bat -Dsonar.projectKey=employee-service -Dsonar.sources=src -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin"
+            }
+        }
     }
 }
